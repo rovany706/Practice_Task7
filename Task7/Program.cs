@@ -44,15 +44,10 @@ namespace Task7
             lengthsOfWords = lengthsOfWords.OrderBy(num => num).ToArray();
 
             Tree tree = new Tree();
-            Tree.GenerateTree(tree.root, 0, maxLength);
 
             foreach (int length in lengthsOfWords)
-            {
-                Tree.isGenereated = false;
                 Tree.GenerateEndpoints(tree.root, 0, length);
-            }
 
-            Tree.isGenereated = false;
             Tree.words = new List<string>(lengthsOfWords.Length);
             Tree.GenerateWords(tree.root, string.Empty);
 
@@ -60,6 +55,7 @@ namespace Task7
             foreach (string word in Tree.words)
                 Console.Write($"{word} ");
             Console.WriteLine();
+            Console.ReadLine();
         }
     }
 }

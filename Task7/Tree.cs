@@ -31,47 +31,6 @@ namespace Task7
         public static bool isGenereated;
         public static List<string> words;
 
-        public static void GenerateTree(Node p, int currentLength, int length)
-        {
-            if (currentLength == 0)
-            {
-                if (p.Left == null)
-                {
-                    p.Left = new Node(0);
-                }
-
-                if (p.Middle == null)
-                {
-                    p.Middle = new Node(1);
-                }
-
-                if (p.Right == null)
-                {
-                    p.Right = new Node(2);
-                }
-            }
-            if (p != null && currentLength != length)
-            {
-                if (p.Left == null)
-                {
-                    p.Left = new Node(0);
-                }
-
-                if (p.Middle == null)
-                {
-                    p.Middle = new Node(1);
-                }
-
-                if (p.Right == null)
-                {
-                    p.Right = new Node(2);
-                }
-                GenerateTree(p.Left, currentLength + 1, length);
-                GenerateTree(p.Middle, currentLength + 1, length);
-                GenerateTree(p.Right, currentLength + 1, length);
-            }
-        }
-
         public static void ShowTree(Node p, int l)
         {
             if (p != null)
@@ -87,29 +46,48 @@ namespace Task7
 
         public static void GenerateEndpoints(Node p, int currentLength, int length)
         {
-            if (!isGenereated)
+           if (currentLength != length - 1)
             {
-                if (p != null)
+                if (p.Left != null && p.Left.IsEnd == false)
+                    GenerateEndpoints(p.Left, currentLength + 1, length);
+                else if (p.Left == null)
                 {
-                    if (currentLength == length - 1)
-                    {
-                        if (p.Left.IsEnd == false)
-                            p.Left.IsEnd = true;
+                    p.Left = new Node(0);
+                    GenerateEndpoints(p.Left, currentLength + 1, length);
+                }
 
-                        else if (p.Middle.IsEnd == false)
-                            p.Middle.IsEnd = true;
+                else if (p.Middle != null && p.Middle.IsEnd == false)
+                    GenerateEndpoints(p.Middle, currentLength + 1, length);
+                else if (p.Middle == null)
+                {
+                    p.Middle = new Node(1);
+                    GenerateEndpoints(p.Middle, currentLength + 1, length);
+                }
 
-                        else if (p.Right.IsEnd == false)
-                            p.Right.IsEnd = true;
-                        isGenereated = true;
-                    }
-
-                    else if (p.Left.IsEnd == false)
-                        GenerateEndpoints(p.Left, currentLength + 1, length);
-                    else if (p.Middle.IsEnd == false)
-                        GenerateEndpoints(p.Middle, currentLength + 1, length);
-                    else if (p.Right.IsEnd == false)
-                        GenerateEndpoints(p.Right, currentLength + 1, length);
+                else if (p.Right != null && p.Right.IsEnd == false)
+                    GenerateEndpoints(p.Right, currentLength + 1, length);
+                else if (p.Right == null)
+                {
+                    p.Right = new Node(2);
+                    GenerateEndpoints(p.Right, currentLength + 1, length);
+                }
+            }
+            else
+            {
+                if (p.Left == null || p.Left.IsEnd == false)
+                {
+                    p.Left = new Node(0);
+                    p.Left.IsEnd = true;
+                }
+                else if (p.Middle == null || p.Middle.IsEnd == false)
+                {
+                    p.Middle = new Node(1);
+                    p.Middle.IsEnd = true;
+                }
+                else if (p.Right == null || p.Right.IsEnd == false)
+                {
+                    p.Right = new Node(2);
+                    p.Right.IsEnd = true;
                 }
             }
         }
