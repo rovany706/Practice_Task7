@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using InputHelper;
 
 namespace Task7
@@ -10,16 +8,12 @@ namespace Task7
     class Program
     {
         //проверка длин кодовых слов по неравенству Макмиллана
-        static bool CheckLengthsAndFindMax(int[] lengths, out int max)
+        static bool CheckLengths(int[] lengths)
         {
             double sum = 0;
-            max = lengths[0];
             foreach (int num in lengths)
-            {
-                if (num > max)
-                    max = num;
                 sum += 1 / Math.Pow(3, num);
-            }
+
             if (sum <= 1)
                 return true;
             return false;
@@ -32,11 +26,10 @@ namespace Task7
                               "=================");
             bool isOk;
             int[] lengthsOfWords;
-            int maxLength;
             do
             {
                 lengthsOfWords = Input.ReadIntLine("Введите длины кодовых слов, разделяя их пробелом: ");
-                isOk = CheckLengthsAndFindMax(lengthsOfWords, out maxLength);
+                isOk = CheckLengths(lengthsOfWords);
                 if (!isOk)
                     Console.WriteLine("Ошибка! Введенные длины кодовых слов не прошли проверку по неравенству Макмиллана. Повторите ввод.");
             } while (!isOk);

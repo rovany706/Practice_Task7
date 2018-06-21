@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task7
 {
@@ -28,7 +25,6 @@ namespace Task7
             root = new Node(-1);
         }
         public Node root { get; set; }
-        public static bool isGenereated;
         public static List<string> words;
 
         public static void ShowTree(Node p, int l)
