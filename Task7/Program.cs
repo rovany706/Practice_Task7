@@ -7,6 +7,7 @@ namespace Task7
 {
     class Program
     {
+        private static List<string> words;
         //проверка длин кодовых слов по неравенству Макмиллана
         static bool CheckLengths(int[] lengths)
         {
@@ -24,6 +25,7 @@ namespace Task7
             Console.WriteLine("Условие задачи:\nПостроить префиксный троичный код с заданными длинами кодовых слов.\n" +
                               "Кодовые слова выписать в лексикографическом порядке.\n" +
                               "=================");
+
             bool isOk;
             int[] lengthsOfWords;
             do
@@ -36,19 +38,29 @@ namespace Task7
 
             lengthsOfWords = lengthsOfWords.OrderBy(num => num).ToArray();
 
-            Tree tree = new Tree();
-
+            words = new List<string>(lengthsOfWords.Length);
             foreach (int length in lengthsOfWords)
-                Tree.GenerateEndpoints(tree.root, 0, length);
+                GenerateWord(length, 0, "");
 
-            Tree.words = new List<string>(lengthsOfWords.Length);
-            Tree.GenerateWords(tree.root, string.Empty);
-
-            Console.Write("Построенный префиксный троичный код: ");
-            foreach (string word in Tree.words)
-                Console.Write($"{word} ");
-            Console.WriteLine();
+            Console.Write("Полученный префиксный код: ");
+            foreach (string word in words)
+                Console.Write("{0} ", word);
             Console.ReadLine();
+        }
+
+        static void GenerateWord(int length, int currentLength, string word)
+        {
+            if (currentLength == length)
+                words.Add(word);
+            else
+            {
+                if (!words.Contains(word + '0'))
+                    GenerateWord(length, currentLength + 1, word + '0');
+                else if (!words.Contains(word + '1'))
+                    GenerateWord(length, currentLength + 1, word + '1');
+                else if (!words.Contains(word + '2'))
+                    GenerateWord(length, currentLength + 1, word + '2');
+            }
         }
     }
 }
